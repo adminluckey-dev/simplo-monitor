@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.py[cod]
+
+# Runtime data and secrets
+data/*.db
+data/*.log
+data/notify_settings.json

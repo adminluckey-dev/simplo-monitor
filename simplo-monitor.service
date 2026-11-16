@@ -1,0 +1,14 @@
+[Unit]
+Description=Simplo NX Witness Camera Monitor
+After=network.target networkoptix-mediaserver.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/admincmms/simplo-monitor
+ExecStart=/usr/bin/python3 /home/admincmms/simplo-monitor/app.py
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target

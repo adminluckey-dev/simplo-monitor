@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login — CMMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+</head>
+<body class="login-body">
+  <div class="login-shell">
+    <div class="login-card">
+      <img class="login-logo" src="/static/img/logo.png" alt="Simplo X SVT" />
+      <h1>Login CMMS</h1>
+      <p class="settings-hint">Masuk untuk mengakses dashboard monitoring.</p>
+      <form id="loginForm" class="login-form" autocomplete="on">
+        <label>
+          Username
+          <input type="text" id="loginUser" name="username" required maxlength="80" autocomplete="username" />
+        </label>
+        <label>
+          Password
+          <input type="password" id="loginPass" name="password" required maxlength="120" autocomplete="current-password" />
+        </label>
+        <button type="submit" class="btn-primary" id="loginBtn">Masuk</button>
+        <span class="meta-save-msg" id="loginMsg" aria-live="polite"></span>
+      </form>
+    </div>
+  </div>
+  <script>
+    (async () => {
+      try {
+        const me = await fetch("/api/auth/me", { cache: "no-store" });
+        if (me.ok) {
+          const data = await me.json();
+          if (data.ok) {
+            window.location.replace("/");
+            return;
+          }
+        }
+      } catch (_) {}
+
+      const form = document.getElementById("loginForm");
+      const msg = document.getElementById("loginMsg");
+      const btn = document.getElementById("loginBtn");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msg.textContent = "Memproses…";
+        msg.className = "meta-save-msg";
+        btn.disabled = true;
+        try {
+          const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: document.getElementById("loginUser").value.trim(),
+              password: document.getElementById("loginPass").value,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) throw new Error(data.error || "Login gagal");
+          window.location.replace("/");
+        } catch (err) {
+          msg.textContent = err.message || "Login gagal";
+          msg.className = "meta-save-msg danger";
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

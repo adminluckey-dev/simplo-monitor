@@ -1,0 +1,447 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R] /Count 7 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 2354 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+(SIMPLO MONITOR \(CMMS\)) Tj
+T* (Panduan Pengguna) Tj
+T* () Tj
+T* (Panduan ini untuk operator dan administrator yang memakai dashboard harian. Simplo Monitor) Tj
+T* (memantau kamera NX Witness dan gateway jaringan, mencatat gangguan, lalu membantu membuat) Tj
+T* (work order serta jadwal preventive maintenance.) Tj
+T* () Tj
+T* (Alamat aplikasi di jaringan lokal biasanya http://<ip-server>:8080. Contoh di situs:) Tj
+T* (http://192.168.100.224:8080.) Tj
+T* () Tj
+T* (1. MASUK DAN KELUAR) Tj
+T* () Tj
+T* (  1. Buka alamat dashboard di browser.) Tj
+T* (  2. Isi Username dan Password, lalu klik Masuk.) Tj
+T* (  3. Sesi login berlaku 7 hari di browser yang sama.) Tj
+T* (  4. Keluar lewat tombol Logout di kiri bawah.) Tj
+T* () Tj
+T* (Akun pertama yang dibuat sistem \(kalau belum ada user sama sekali\):) Tj
+T* () Tj
+T* (  Username | Password | Level) Tj
+T* (  admin | admin1234 | Administrator) Tj
+T* () Tj
+T* (Ganti password itu segera lewat User Management setelah login pertama.) Tj
+T* () Tj
+T* (Menu yang tampil mengikuti hak akses akun. Administrator melihat semua menu. Operator hanya) Tj
+T* (melihat menu yang dicentang saat akun dibuat.) Tj
+T* () Tj
+T* (2. ARTI WARNA STATUS) Tj
+T* () Tj
+T* (Setiap perangkat punya satu dari tiga kondisi:) Tj
+T* () Tj
+T* (  Warna | Label | Artinya) Tj
+T* (  Hijau | Online & Sehat | Terhubung, dan untuk CCTV sedang merekam dengan jadwal rekam) Tj
+T* (  aktif) Tj
+T* (  Oranye | Perlu Perhatian | Masih hidup, tetapi ada yang kurang. Contoh CCTV: tidak merekam) Tj
+T* (  atau jadwal rekam mati. Bisa juga NX bilang offline sementara IP kamera masih menjawab) Tj
+T* (  Merah | Gangguan Aktif | Offline atau tidak terjangkau) Tj
+T* () Tj
+T* (Kategori perangkat: Network, CCTV, Access, Alarm.) Tj
+T* () Tj
+T* (Untuk CCTV, sistem tidak hanya percaya status NX. Server juga mengetuk IP kamera langsung.) Tj
+T* (Kalau IP tidak menjawab, kartu menjadi gangguan meski NX masih menulis Online. Kalau IP) Tj
+T* (menjawab tetapi NX offline, kartu menjadi perhatian.) Tj
+T* () Tj
+T* (Gateway WiFi/LTE \(perangkat Network\) tidak langsung merah karena satu ping gagal. Status) Tj
+T* (Offline baru muncul setelah dua pemeriksaan gagal berturut-turut.) Tj
+T* () Tj
+T* (3. DASHBOARD) Tj
+T* () Tj
+T* (Ini layar utama setelah login. Angka di atas diperbarui otomatis \(interval default sekitar) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+6 0 obj
+<< /Length 2258 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+(10 detik, mengikuti pengaturan server\).) Tj
+T* () Tj
+T* (Empat kartu ringkasan:) Tj
+T* () Tj
+T* (  - Total Perangkat - semua aset yang sedang dipantau.) Tj
+T* (  - Online & Sehat - jumlah hijau plus persentasenya.) Tj
+T* (  - Perlu Perhatian - jumlah oranye.) Tj
+T* (  - Gangguan Aktif - jumlah merah.) Tj
+T* () Tj
+T* (Filter di atas grid:) Tj
+T* () Tj
+T* (  - Semua, Gangguan, Perlu perhatian) Tj
+T* (  - Network, CCTV, Access, Alarm) Tj
+T* (  - REC - hanya yang sedang merekam) Tj
+T* () Tj
+T* (Urutan bisa diubah lewat Urut: prioritas masalah, nama, atau status. Prioritas masalah) Tj
+T* (menaruh gangguan di depan.) Tj
+T* () Tj
+T* (Klik sebuah kartu untuk membuka panel kanan:) Tj
+T* () Tj
+T* (  - Status koneksi, recording, lokasi, IP, vendor, MAC, jadwal rekam) Tj
+T* (  - Untuk CCTV: hasil deteksi IP langsung) Tj
+T* (  - Untuk router: latency, internet, SSID, dan detail jaringan lain) Tj
+T* (  - Informasi aset \(kategori, lokasi detail, tanggal pasang, garansi, kontrak maintenance\)) Tj
+T* (  - Indikator status dan kronologi hari ini) Tj
+T* (  - Buka di NX Witness - membuka kamera di NX \(perangkat kamera\)) Tj
+T* (  - Refresh status - menarik ulang data dari NX dan router) Tj
+T* () Tj
+T* (Mode Dinding di kanan atas membuat tampilan fullscreen, cocok untuk monitor ruang kontrol.) Tj
+T* (Tekan lagi atau keluar dari fullscreen browser untuk kembali.) Tj
+T* () Tj
+T* (Banner kuning/merah di atas grid muncul jika NX belum bisa dihubungi. Selama mode demo) Tj
+T* (aktif, angka di layar adalah contoh, bukan kondisi lapangan.) Tj
+T* () Tj
+T* (4. MANAJEMEN ASSET) Tj
+T* () Tj
+T* (Menu ini adalah daftar resmi perangkat yang dipantau. Dashboard hanya menampilkan aset yang) Tj
+T* (ada di sini \(ditambah status hidup dari NX/router\).) Tj
+T* () Tj
+T* (Menambah perangkat) Tj
+T* () Tj
+T* (  1. Klik + Tambah Perangkat.) Tj
+T* (  2. Isi nama, kategori, lokasi, dan IP.) Tj
+T* (  3. Lengkapi detail lokasi, vendor, model, MAC, tanggal pemasangan, akhir garansi, dan) Tj
+T* (     akhir kontrak maintenance bila ada.) Tj
+T* (  4. Klik Simpan Perangkat.) Tj
+T* () Tj
+T* (Tanggal akhir garansi dan maintenance menentukan label di tabel:) Tj
+T* () Tj
+T* (  - Aktif - hari ini masih di dalam tanggal akhir \(inklusif\).) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 6 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 2206 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+(  - Tidak aktif - tanggal akhir sudah lewat.) Tj
+T* (  - Belum diisi - tanggal kosong.) Tj
+T* () Tj
+T* (Mengubah atau menghapus) Tj
+T* () Tj
+T* (  - Edit membuka form yang sama.) Tj
+T* (  - Hapus mengeluarkan perangkat dari monitoring. Sistem meminta konfirmasi.) Tj
+T* () Tj
+T* (Impor dari Live) Tj
+T* () Tj
+T* (Impor dari Live menyalin perangkat yang sedang terlihat dari NX/router ke daftar aset. Pakai) Tj
+T* (ini saat inventaris masih kosong atau ada kamera baru di NX yang belum tercatat. Data yang) Tj
+T* (sudah ada tidak ditimpa sembarangan; yang baru ditambahkan.) Tj
+T* () Tj
+T* (Saat server pertama kali jalan dan tabel aset masih kosong, sistem mengisi aset sekali dari) Tj
+T* (perangkat yang sedang hidup. Setelah itu, tambah dan hapus lewat menu ini.) Tj
+T* () Tj
+T* (5. TIM TEKNISI) Tj
+T* () Tj
+T* (Daftar orang yang bisa ditugaskan di work order dan catatan PM.) Tj
+T* () Tj
+T* (  1. Klik + Tambah Baru.) Tj
+T* (  2. Isi nama, nomor HP, email, dan ID Telegram \(opsional\).) Tj
+T* (  3. Centang keahlian: Network, CCTV, Access, Alarm. Boleh lebih dari satu.) Tj
+T* (  4. Klik Simpan Teknisi.) Tj
+T* () Tj
+T* (Email wajib terisi kalau teknisi harus menerima work order lewat email. Keahlian menentukan) Tj
+T* (teknisi mana yang muncul saat membuat WO untuk suatu kategori, dan siapa yang dipilih oleh) Tj
+T* (auto-WO.) Tj
+T* () Tj
+T* (Edit dan Hapus ada di baris masing-masing.) Tj
+T* () Tj
+T* (6. WORK ORDER) Tj
+T* () Tj
+T* (Work order adalah perintah kerja: kategori, tanggal, jam, satu aset, satu teknisi, dan) Tj
+T* (catatan.) Tj
+T* () Tj
+T* (Membuat manual) Tj
+T* () Tj
+T* (  1. Klik + Buat Work Order.) Tj
+T* (  2. Isi tanggal dan jam.) Tj
+T* (  3. Pilih Kategori. Dropdown aset dan teknisi baru terisi setelah kategori dipilih. Teknisi) Tj
+T* (     yang muncul adalah yang punya keahlian kategori itu.) Tj
+T* (  4. Pilih aset dan teknisi.) Tj
+T* (  5. Tulis catatan / instruksi.) Tj
+T* (  6. Klik Simpan & Kirim Email.) Tj
+T* () Tj
+T* (Nomor WO dibuat otomatis. Status kolom Email menunjukkan hasil pengiriman, misalnya) Tj
+T* (terkirim, teknisi tanpa email, atau gagal. Re-send Email mengirim ulang. Hapus menghapus WO) Tj
+T* (setelah konfirmasi.) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 8 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+10 0 obj
+<< /Length 2106 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+() Tj
+T* (Auto Generate WO) Tj
+T* () Tj
+T* (Di bagian atas halaman Work Order ada dua angka:) Tj
+T* () Tj
+T* (  Field | Fungsi) Tj
+T* (  Ambang \(menit\) | Berapa lama gangguan atau perlu perhatian harus berlangsung sebelum WO) Tj
+T* (  otomatis dibuat. 0 mematikan fitur ini.) Tj
+T* (  Jeda \(menit\) | Jarak minimum antar WO otomatis untuk aset yang sama. Default 60 menit.) Tj
+T* (  Mencegah WO berulang saat status berkedip.) Tj
+T* () Tj
+T* (Klik Simpan Setting setelah mengubah angka. Batas maksimum 10080 menit \(7 hari\).) Tj
+T* () Tj
+T* (WO otomatis hanya dibuat jika semua ini terpenuhi:) Tj
+T* () Tj
+T* (  1. Auto-WO menyala \(ambang lebih dari 0\).) Tj
+T* (  2. Aset sudah ada di Manajemen Asset dan kondisinya gangguan atau perlu perhatian.) Tj
+T* (  3. Kondisi itu sudah berlangsung melewati ambang.) Tj
+T* (  4. Belum ada WO terbuka untuk aset itu.) Tj
+T* (  5. Jeda sejak WO terakhir untuk aset itu sudah lewat.) Tj
+T* (  6. Ada teknisi dengan keahlian yang sama dan belum terikat WO terbuka. Sistem memilih nama) Tj
+T* (     yang urut paling awal.) Tj
+T* () Tj
+T* (Catatan WO otomatis diawali Auto Generate WO. Email tetap dikirim ke teknisi yang) Tj
+T* (ditugaskan.) Tj
+T* () Tj
+T* (7. JADWAL PM) Tj
+T* () Tj
+T* (Preventive maintenance dijadwalkan per aset.) Tj
+T* () Tj
+T* (  1. Klik + Jadwal PM.) Tj
+T* (  2. Pilih aset.) Tj
+T* (  3. Pilih interval: bulanan \(30\), triwulan \(90\), semester \(180\), tahunan \(365\), atau kustom) Tj
+T* (     \(isi jumlah hari\).) Tj
+T* (  4. Isi tanggal Jadwal berikutnya.) Tj
+T* (  5. Biarkan Aktif tercentang.) Tj
+T* (  6. Isi catatan cakupan atau nomor kontrak bila perlu.) Tj
+T* (  7. Klik Simpan Jadwal.) Tj
+T* () Tj
+T* (Status di tabel:) Tj
+T* () Tj
+T* (  Status | Arti) Tj
+T* (  Sesuai jadwal | Jadwal berikutnya masih lebih dari 7 hari) Tj
+T* (  Segera | Jatuh tempo dalam 7 hari ke depan) Tj
+T* (  Terlambat | Tanggal jadwal berikutnya sudah lewat) Tj
+T* (  Nonaktif | Centang Aktif dimatikan) Tj
+T* () Tj
+T* (Kolom Kontrak mengikuti tanggal akhir maintenance di data aset.) Tj
+T* () Tj
+T* (Mencatat service) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 10 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+12 0 obj
+<< /Length 1978 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+() Tj
+T* (  1. Buka baris jadwal \(service record\).) Tj
+T* (  2. Isi tanggal service, teknisi \(opsional\), dan catatan hasil kerja.) Tj
+T* (  3. Klik Catat Service.) Tj
+T* () Tj
+T* (Service record menggeser jadwal berikutnya sesuai interval. Riwayat bisa dihapus per baris.) Tj
+T* (Menghapus jadwal PM juga menghapus service record-nya.) Tj
+T* () Tj
+T* (8. STATISTIK) Tj
+T* () Tj
+T* (Menunjukkan berapa lama perangkat sehat, perhatian, dan gangguan pada rentang tanggal. Angka) Tj
+T* (dihitung dari histori insiden, bukan dari tebakan.) Tj
+T* () Tj
+T* (  1. Isi Dari dan Sampai.) Tj
+T* (  2. Pilih satu perangkat atau Semua perangkat.) Tj
+T* (  3. Klik Terapkan.) Tj
+T* () Tj
+T* (Empat angka:) Tj
+T* () Tj
+T* (  - Persentase Sehat - porsi waktu hijau.) Tj
+T* (  - Uptime - sehat ditambah perhatian.) Tj
+T* (  - Downtime - porsi waktu gangguan.) Tj
+T* (  - Perangkat - jumlah yang masuk hitungan, plus label rentang tanggal.) Tj
+T* () Tj
+T* (Di bawahnya ada pita timeline, grafik harian, dan tabel per perangkat \(sehat, uptime,) Tj
+T* (downtime, distribusi warna\).) Tj
+T* () Tj
+T* (9. LAPORAN) Tj
+T* () Tj
+T* (Histori kejadian: gangguan mulai, perhatian mulai, pulih, dan perubahan status.) Tj
+T* () Tj
+T* (  1. Isi Dari, Sampai, dan perangkat.) Tj
+T* (  2. Klik Terapkan.) Tj
+T* (  3. Export PDF mengunduh laporan sesuai filter yang sedang tampil.) Tj
+T* () Tj
+T* (Kolom tabel: waktu, jenis kejadian, device, lokasi, status, keterangan.) Tj
+T* () Tj
+T* (Rentang default kalau tanggal dikosongkan adalah 7 hari terakhir sampai hari ini. Ini) Tj
+T* (berlaku juga di Statistik.) Tj
+T* () Tj
+T* (10. SETTING NOTIFIKASI) Tj
+T* () Tj
+T* (Email) Tj
+T* () Tj
+T* (Dipakai untuk mengirim work order ke teknisi.) Tj
+T* () Tj
+T* (  1. Centang Aktifkan.) Tj
+T* (  2. SMTP Host biasanya smtp.gmail.com, port 587.) Tj
+T* (  3. Isi email pengirim dan App Password Gmail \(bukan password login Gmail biasa\).) Tj
+T* (  4. Isi nama pengirim dan from email.) Tj
+ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 12 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+14 0 obj
+<< /Length 2147 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+(  5. Kolom penerima dipisah koma. Pengiriman WO tetap memakai email yang tersimpan di data) Tj
+T* (     teknisi.) Tj
+T* (  6. Simpan Email, lalu Kirim Tes Email untuk memastikan SMTP jalan.) Tj
+T* () Tj
+T* (Kalau password dibiarkan kosong saat menyimpan ulang, password lama tetap dipakai.) Tj
+T* () Tj
+T* (Telegram) Tj
+T* () Tj
+T* (  1. Buat bot lewat @BotFather dan salin token.) Tj
+T* (  2. Centang Aktifkan.) Tj
+T* (  3. Isi Bot Token dan Chat ID \(lebih dari satu dipisah koma\).) Tj
+T* (  4. Simpan Telegram, lalu Kirim Tes Telegram.) Tj
+T* () Tj
+T* (ID Telegram di data teknisi adalah catatan kontak. Pesan tes memakai Chat ID di halaman ini.) Tj
+T* () Tj
+T* (11. USER MANAGEMENT) Tj
+T* () Tj
+T* (Hanya administrator yang melihat menu ini.) Tj
+T* () Tj
+T* (  1. Klik + Tambah User.) Tj
+T* (  2. Isi username \(tanpa spasi\), nama lengkap, dan password minimal 6 karakter.) Tj
+T* (  3. Pilih level:) Tj
+T* (- Administrator - semua menu.) Tj
+T* (- Operator - centang menu yang boleh dibuka. Minimal satu menu. User Management tidak bisa) Tj
+T* (diberikan ke operator.) Tj
+T* (  4. Biarkan Aktif tercentang.) Tj
+T* (  5. Klik Simpan User.) Tj
+T* () Tj
+T* (Saat mengedit, kosongkan password jika tidak ingin menggantinya. User nonaktif tidak bisa) Tj
+T* (login. Sistem menolak menghapus administrator aktif yang terakhir.) Tj
+T* () Tj
+T* (12. RUTINITAS YANG DISARANKAN) Tj
+T* () Tj
+T* (Awal shift) Tj
+T* () Tj
+T* (  1. Login dan lihat empat angka di dashboard.) Tj
+T* (  2. Filter Gangguan, lalu Perlu perhatian.) Tj
+T* (  3. Buka kartu merah: catat IP, lokasi, dan kronologi.) Tj
+T* (  4. Cek Work Order: apakah auto-WO sudah terbit dan email teknisi berstatus terkirim.) Tj
+T* (  5. Cek Jadwal PM untuk baris Terlambat dan Segera.) Tj
+T* () Tj
+T* (Saat ada gangguan baru) Tj
+T* () Tj
+T* (  1. Konfirmasi di panel detail \(dan, untuk CCTV, deteksi IP langsung\).) Tj
+T* (  2. Kalau auto-WO belum menyala atau teknisi yang dipilih otomatis tidak sesuai, buat WO) Tj
+T* (     manual.) Tj
+T* (  3. Pastikan email teknisi terisi dan Setting Notifikasi email sudah dites.) Tj
+T* () Tj
+T* (Akhir periode) Tj
+T* () Tj
+ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 14 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+16 0 obj
+<< /Length 1308 >>
+stream
+BT
+/F1 11 Tf
+40 792 Td
+15 TL
+(  1. Buka Statistik untuk rentang minggu atau bulan.) Tj
+T* (  2. Export PDF dari Laporan untuk arsip.) Tj
+T* () Tj
+T* (13. JIKA TAMPILAN TIDAK SESUAI LAPANGAN) Tj
+T* () Tj
+T* (  Yang terlihat | Yang dicek) Tj
+T* (  Banner NX gagal, data terasa palsu | Password NX di .env server. Selama fallback demo) Tj
+T* (  aktif, layar bukan kondisi asli) Tj
+T* (  Kamera hijau di NX tetapi merah di CMMS | IP kamera dari server CMMS. CMMS menandai) Tj
+T* (  gangguan jika port kamera tidak menjawab) Tj
+T* (  Kamera merah di NX tetapi oranye di CMMS | IP masih hidup. Status perhatian berarti "IP) Tj
+T* (  OK", jaringan kamera belum mati total) Tj
+T* (  Router berkedip offline | Butuh dua gagal beruntun. Cek kabel/WiFi host CMMS ke) Tj
+T* (  192.168.1.1) Tj
+T* (  Auto-WO tidak terbit | Ambang masih 0, aset belum ada di Manajemen Asset, belum melewati) Tj
+T* (  ambang/jeda, sudah ada WO terbuka, atau tidak ada teknisi bebas dengan keahlian itu) Tj
+T* (  Email WO gagal | Aktifkan email, tes SMTP, dan pastikan teknisi punya alamat email) Tj
+T* (  Menu tidak muncul | Akun operator. Minta administrator menambah hak akses menu) Tj
+T* (  Login ditolak | Username/password, atau akun dinonaktifkan) Tj
+T* () Tj
+T* (Health server bisa dicek di http://<ip-server>:8080/api/health.) Tj
+ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 16 0 R /Resources << /Font << /F1 3 0 R >> >> >>
+endobj
+xref
+0 18
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000155 00000 n 
+0000000225 00000 n 
+0000002631 00000 n 
+0000002757 00000 n 
+0000005067 00000 n 
+0000005193 00000 n 
+0000007451 00000 n 
+0000007577 00000 n 
+0000009736 00000 n 
+0000009864 00000 n 
+0000011895 00000 n 
+0000012023 00000 n 
+0000014223 00000 n 
+0000014351 00000 n 
+0000015712 00000 n 
+trailer
+<< /Size 18 /Root 1 0 R >>
+startxref
+15840
+%%EOF

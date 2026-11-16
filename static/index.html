@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CMMS - Menara SVT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="/static/img/logo.png" alt="Simplo X SVT" />
+        <strong id="siteName" class="visually-hidden">CMMS</strong>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" href="#" data-nav="dashboard">
+          <span class="nav-ico">▣</span> Dashboard
+        </a>
+        <a class="nav-item" href="#" data-nav="assets">
+          <span class="nav-ico">◉</span> Manajemen Asset
+        </a>
+        <a class="nav-item" href="#" data-nav="wo">
+          <span class="nav-ico">☰</span> Work Order
+        </a>
+        <a class="nav-item" href="#" data-nav="pm">
+          <span class="nav-ico">◷</span> Jadwal PM
+        </a>
+        <a class="nav-item" href="#" data-nav="team">
+          <span class="nav-ico">♟</span> Tim Teknisi
+        </a>
+        <a class="nav-item" href="#" data-nav="statistik">
+          <span class="nav-ico">▥</span> Statistik
+        </a>
+        <a class="nav-item" href="#" data-nav="report">
+          <span class="nav-ico">▤</span> Laporan
+        </a>
+        <a class="nav-item" href="#" data-nav="notify">
+          <span class="nav-ico">✉</span> Setting Notifikasi
+        </a>
+        <a class="nav-item" href="#" data-nav="users">
+          <span class="nav-ico">⚙</span> User Management
+        </a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="user-chip">
+          <div class="avatar" id="userAvatar">AD</div>
+          <div>
+            <div class="user-name" id="siteOrg">—</div>
+            <div class="user-role" id="userRoleLabel">—</div>
+          </div>
+        </div>
+        <button type="button" class="btn-secondary btn-logout" id="btnLogout">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">CMMS - <span id="siteSite">Menara SVT</span></h1>
+          <p class="live-line">
+            <span class="live-dot"></span>
+            Live · <span id="liveClock">—</span>
+          </p>
+        </div>
+        <button type="button" class="btn-wall" id="btnWall" title="Mode dinding / fullscreen">
+          Mode Dinding
+        </button>
+      </header>
+
+      <div id="viewDashboard">
+      <section class="stats" id="stats">
+        <article class="stat card-blue">
+          <div class="stat-label">Total Perangkat</div>
+          <div class="stat-value" id="statTotal">0</div>
+        </article>
+        <article class="stat card-green">
+          <div class="stat-label">Online &amp; Sehat</div>
+          <div class="stat-value">
+            <span id="statHealthy">0</span>
+            <small id="statHealthyPct">0%</small>
+          </div>
+        </article>
+        <article class="stat card-orange">
+          <div class="stat-label">Perlu Perhatian</div>
+          <div class="stat-value" id="statAttention">0</div>
+          <div class="stat-sub">Tidak merekam / jadwal aktif</div>
+        </article>
+        <article class="stat card-red">
+          <div class="stat-label">Gangguan Aktif</div>
+          <div class="stat-value" id="statIssue">0</div>
+          <div class="stat-sub" id="statIssueSub">offline dari NX Witness</div>
+        </article>
+      </section>
+
+      <div class="banner" id="errorBanner" hidden></div>
+
+      <section class="workspace">
+        <div class="grid-panel">
+          <div class="toolbar">
+            <div class="filters" id="filters">
+              <button type="button" class="chip active" data-filter="all">Semua</button>
+              <button type="button" class="chip chip-red" data-filter="issue">Gangguan</button>
+              <button type="button" class="chip chip-orange" data-filter="attention">Perlu perhatian</button>
+              <button type="button" class="chip" data-filter="Network">Network</button>
+              <button type="button" class="chip" data-filter="CCTV">CCTV</button>
+              <button type="button" class="chip" data-filter="Access">Access</button>
+              <button type="button" class="chip" data-filter="Alarm">Alarm</button>
+              <button type="button" class="chip" data-filter="recording">REC</button>
+            </div>
+            <label class="sort">
+              Urut:
+              <select id="sortBy">
+                <option value="priority">prioritas masalah</option>
+                <option value="name">nama</option>
+                <option value="status">status</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="device-grid" id="deviceGrid"></div>
+
+          <div class="grid-foot">
+            <div id="pageInfo">Menampilkan 0 perangkat</div>
+            <div class="pager" id="pager"></div>
+          </div>
+        </div>
+
+        <aside class="detail" id="detailPanel">
+          <div class="detail-empty" id="detailEmpty">
+            Pilih perangkat untuk melihat detail status.
+          </div>
+          <div class="detail-body" id="detailBody" hidden>
+            <div class="detail-head">
+              <h2>Detail Perangkat</h2>
+              <span class="badge" id="detailBadge">—</span>
+            </div>
+            <h3 id="detailName">—</h3>
+            <p class="detail-model" id="detailModel">—</p>
+
+            <dl class="kv">
+              <div><dt>Status koneksi</dt><dd id="detailConn">—</dd></div>
+              <div><dt id="detailRecLabel">Recording</dt><dd id="detailRec">—</dd></div>
+              <div><dt>Lokasi / Group</dt><dd id="detailLoc">—</dd></div>
+              <div><dt>IP Address</dt><dd id="detailIp">—</dd></div>
+              <div id="detailDirectIpRow"><dt>Deteksi IP langsung</dt><dd id="detailDirectIp">—</dd></div>
+              <div><dt>Vendor / Model</dt><dd id="detailVendor">—</dd></div>
+              <div><dt>MAC / Physical ID</dt><dd id="detailMac">—</dd></div>
+              <div><dt id="detailSchedLabel">Jadwal rekam</dt><dd id="detailSched">—</dd></div>
+              <div id="detailRouterExtra" class="kv-stack" hidden>
+                <dt>Detail jaringan</dt>
+                <dd>
+                  <ul class="net-detail-list" id="detailRouterInfo"></ul>
+                </dd>
+              </div>
+            </dl>
+
+            <div class="meta-block" id="detailMetaBlock">
+              <h4>Informasi Aset</h4>
+              <dl class="kv meta-kv meta-kv-readonly">
+                <div><dt>Kategori</dt><dd id="detailCategory">—</dd></div>
+                <div><dt>Detail lokasi</dt><dd id="detailLocDetail">—</dd></div>
+                <div><dt>Tanggal Pemasangan</dt><dd id="detailInstallDate">—</dd></div>
+                <div>
+                  <dt>Status Garansi</dt>
+                  <dd>
+                    <div class="meta-status-line">
+                      <span class="meta-status-badge" id="detailWarrantyStatus">Belum diisi</span>
+                      <span class="meta-until-text" id="detailWarrantyEnd">—</span>
+                    </div>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Status Kontrak Maintenance</dt>
+                  <dd>
+                    <div class="meta-status-line">
+                      <span class="meta-status-badge" id="detailMaintenanceStatus">Belum diisi</span>
+                      <span class="meta-until-text" id="detailMaintenanceEnd">—</span>
+                    </div>
+                  </dd>
+                </div>
+              </dl>
+              <p class="settings-hint">Edit info aset di menu Manajemen Asset.</p>
+            </div>
+
+            <div class="uptime-block">
+              <div class="uptime-head">
+                <span>Indikator status</span>
+                <strong id="detailUptimePct">—</strong>
+              </div>
+              <div class="uptime-bar" id="detailUptimeBar" aria-hidden="true"></div>
+            </div>
+
+            <div class="timeline-block">
+              <h4>Kronologi Hari Ini</h4>
+              <ul class="timeline" id="detailTimeline"></ul>
+            </div>
+
+            <div class="detail-actions">
+              <a class="btn-primary" id="btnNx" href="#" target="_blank" rel="noopener">Buka di NX Witness</a>
+              <button type="button" class="btn-secondary" id="btnRefreshOne">Refresh status</button>
+            </div>
+          </div>
+        </aside>
+      </section>
+      </div>
+
+      <section class="report-view" id="viewAssets" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div>
+              <h3 class="assets-title">Daftar Perangkat Monitor</h3>
+              <p class="settings-hint">Tambah/hapus perangkat yang dipantau di dashboard, lengkap dengan info aset.</p>
+            </div>
+            <div class="assets-toolbar-actions">
+              <button type="button" class="btn-secondary" id="btnImportAssets">Impor dari Live</button>
+              <button type="button" class="btn-primary" id="btnNewAsset">+ Tambah Perangkat</button>
+            </div>
+          </div>
+          <div class="report-summary" id="assetsSummary">0 perangkat</div>
+          <div class="report-table-wrap assets-table-wrap">
+            <table class="report-table" id="assetsTable">
+              <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>Kategori</th>
+                  <th>Lokasi</th>
+                  <th>IP</th>
+                  <th>Garansi</th>
+                  <th>Maintenance</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="assetsBody">
+                <tr><td colspan="7" class="muted">Memuat aset…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal" id="assetModal" hidden>
+        <div class="modal-backdrop" data-asset-close></div>
+        <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="assetFormTitle">
+          <div class="modal-head">
+            <div>
+              <h3 id="assetFormTitle">Tambah Perangkat</h3>
+              <p class="settings-hint">Isi data perangkat dan info aset di sini.</p>
+            </div>
+            <button type="button" class="modal-close" data-asset-close aria-label="Tutup">×</button>
+          </div>
+          <input type="hidden" id="assetEditId" value="" />
+          <div class="settings-form">
+            <label>
+              Nama perangkat
+              <input type="text" id="assetName" maxlength="120" placeholder="CCTV-L01-01" />
+            </label>
+            <label>
+              Kategori
+              <select id="assetCategory">
+                <option value="CCTV">CCTV</option>
+                <option value="Network">Network</option>
+                <option value="Access">Access</option>
+                <option value="Alarm">Alarm</option>
+              </select>
+            </label>
+            <label>
+              Lokasi / Group
+              <input type="text" id="assetLocation" maxlength="200" placeholder="Lobby Utama" />
+            </label>
+            <label>
+              IP Address
+              <input type="text" id="assetIp" maxlength="80" placeholder="192.168.1.10" />
+            </label>
+            <label class="settings-span-2">
+              Detail lokasi
+              <textarea id="assetLocDetail" class="meta-text" rows="2" maxlength="500" placeholder="Contoh: Lobby Lt.1, dekat pintu masuk utama"></textarea>
+            </label>
+            <label>
+              Vendor
+              <input type="text" id="assetVendor" maxlength="80" />
+            </label>
+            <label>
+              Model
+              <input type="text" id="assetModel" maxlength="80" />
+            </label>
+            <label>
+              MAC / Physical ID
+              <input type="text" id="assetMac" maxlength="80" />
+            </label>
+            <label>
+              Tanggal Pemasangan
+              <input type="date" id="assetInstallDate" />
+            </label>
+            <label>
+              Garansi s/d
+              <input type="date" id="assetWarrantyEnd" />
+            </label>
+            <label>
+              Kontrak Maintenance s/d
+              <input type="date" id="assetMaintenanceEnd" />
+            </label>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn-primary" id="btnSaveAsset">Simpan Perangkat</button>
+            <button type="button" class="btn-secondary" data-asset-close>Batal</button>
+            <span class="meta-save-msg" id="assetSaveMsg" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+
+      <section class="report-view" id="viewWo" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div>
+              <h3 class="assets-title">Work Order</h3>
+              <p class="settings-hint">Buat perintah kerja, pilih aset & teknisi. Setelah disimpan, form dikirim ke email teknisi.</p>
+            </div>
+            <div class="assets-toolbar-actions">
+              <button type="button" class="btn-primary" id="btnNewWo">+ Buat Work Order</button>
+            </div>
+          </div>
+          <div class="wo-auto-bar">
+            <div class="wo-auto-copy">
+              <span class="skill-label">Auto Generate WO</span>
+              <p class="settings-hint">Ambang: menit sejak gangguan atau perlu perhatian sebelum auto-WO. Jeda: jeda minimum antar WO untuk asset yang sama (hindari duplikasi intermittent).</p>
+            </div>
+            <div class="wo-auto-controls">
+              <label class="wo-auto-field">
+                Ambang (menit)
+                <input type="number" id="woAutoMinutes" min="0" max="10080" step="1" placeholder="0 = nonaktif" />
+              </label>
+              <label class="wo-auto-field">
+                Jeda (menit)
+                <input type="number" id="woAutoCooldown" min="0" max="10080" step="1" placeholder="60" value="60" />
+              </label>
+              <button type="button" class="btn-secondary" id="btnSaveWoAuto">Simpan Setting</button>
+              <span class="meta-save-msg" id="woAutoMsg" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="report-summary" id="woSummary">0 work order</div>
+          <div class="report-table-wrap assets-table-wrap">
+            <table class="report-table" id="woTable">
+              <thead>
+                <tr>
+                  <th>No. WO</th>
+                  <th>Kategori</th>
+                  <th>Tanggal</th>
+                  <th>Waktu</th>
+                  <th>Aset</th>
+                  <th>Teknisi</th>
+                  <th>Email</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="woBody">
+                <tr><td colspan="7" class="muted">Memuat work order…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal" id="woModal" hidden>
+        <div class="modal-backdrop" data-wo-close></div>
+        <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="woFormTitle">
+          <div class="modal-head">
+            <div>
+              <h3 id="woFormTitle">Buat Work Order</h3>
+              <p class="settings-hint">Pilih kategori, lalu pilih asset dan teknisi dari dropdown yang sesuai.</p>
+            </div>
+            <button type="button" class="modal-close" data-wo-close aria-label="Tutup">×</button>
+          </div>
+          <div class="settings-form">
+            <label>
+              Tanggal
+              <input type="date" id="woDate" />
+            </label>
+            <label>
+              Waktu (Jam)
+              <input type="time" id="woTime" />
+            </label>
+            <label class="settings-span-2">
+              Kategori
+              <select id="woCategory">
+                <option value="">— Pilih kategori —</option>
+                <option value="Network">Network</option>
+                <option value="CCTV">CCTV</option>
+                <option value="Access">Access</option>
+                <option value="Alarm">Alarm</option>
+              </select>
+            </label>
+            <label>
+              Asset
+              <select id="woAsset">
+                <option value="">— Pilih kategori dulu —</option>
+              </select>
+            </label>
+            <label>
+              Teknisi
+              <select id="woTech">
+                <option value="">— Pilih kategori dulu —</option>
+              </select>
+            </label>
+            <label class="settings-span-2">
+              Catatan / Instruksi
+              <textarea id="woNotes" class="meta-text" rows="2" maxlength="2000" placeholder="Contoh: Cek rekaman dan pastikan backup berjalan"></textarea>
+            </label>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn-primary" id="btnSaveWo">Simpan & Kirim Email</button>
+            <button type="button" class="btn-secondary" data-wo-close>Batal</button>
+            <span class="meta-save-msg" id="woSaveMsg" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+
+      <section class="report-view" id="viewPm" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div>
+              <h3 class="assets-title">Jadwal Preventive Maintenance</h3>
+              <p class="settings-hint">Jadwalkan perawatan rutin per asset sesuai kontrak. Lihat service record dan jadwal maintenance berikutnya.</p>
+            </div>
+            <div class="assets-toolbar-actions">
+              <button type="button" class="btn-primary" id="btnNewPm">+ Jadwal PM</button>
+            </div>
+          </div>
+          <div class="report-summary" id="pmSummary">0 jadwal PM</div>
+          <div class="report-table-wrap assets-table-wrap">
+            <table class="report-table" id="pmTable">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Interval</th>
+                  <th>Service Terakhir</th>
+                  <th>Jadwal Berikutnya</th>
+                  <th>Kontrak</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="pmBody">
+                <tr><td colspan="7" class="muted">Memuat jadwal PM…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal" id="pmModal" hidden>
+        <div class="modal-backdrop" data-pm-close></div>
+        <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="pmFormTitle">
+          <div class="modal-head">
+            <div>
+              <h3 id="pmFormTitle">Tambah Jadwal PM</h3>
+              <p class="settings-hint">Pilih asset dan interval perawatan rutin sesuai kontrak maintenance.</p>
+            </div>
+            <button type="button" class="modal-close" data-pm-close aria-label="Tutup">×</button>
+          </div>
+          <input type="hidden" id="pmEditId" value="" />
+          <div class="settings-form">
+            <label class="settings-span-2">
+              Asset
+              <select id="pmAsset">
+                <option value="">— Pilih asset —</option>
+              </select>
+            </label>
+            <label>
+              Interval
+              <select id="pmInterval">
+                <option value="30">Bulanan (30 hari)</option>
+                <option value="90">Triwulan (90 hari)</option>
+                <option value="180">Semester (180 hari)</option>
+                <option value="365">Tahunan (365 hari)</option>
+                <option value="custom">Kustom (hari)</option>
+              </select>
+            </label>
+            <label id="pmCustomDaysWrap" hidden>
+              Jumlah hari
+              <input type="number" id="pmCustomDays" min="1" max="3650" placeholder="mis. 45" />
+            </label>
+            <label>
+              Jadwal berikutnya
+              <input type="date" id="pmNextDue" />
+            </label>
+            <label class="settings-span-2 switch">
+              <input type="checkbox" id="pmActive" checked />
+              <span>Aktif</span>
+            </label>
+            <label class="settings-span-2">
+              Catatan
+              <textarea id="pmNotes" class="meta-text" rows="2" maxlength="2000" placeholder="Cakupan PM, checklist, atau referensi kontrak"></textarea>
+            </label>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn-primary" id="btnSavePm">Simpan Jadwal</button>
+            <button type="button" class="btn-secondary" data-pm-close>Batal</button>
+            <span class="meta-save-msg" id="pmSaveMsg" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="pmDetailModal" hidden>
+        <div class="modal-backdrop" data-pm-detail-close></div>
+        <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="pmDetailTitle">
+          <div class="modal-head">
+            <div>
+              <h3 id="pmDetailTitle">Service Record</h3>
+              <p class="settings-hint" id="pmDetailSub">Riwayat perawatan dan jadwal berikutnya.</p>
+            </div>
+            <button type="button" class="modal-close" data-pm-detail-close aria-label="Tutup">×</button>
+          </div>
+          <div class="pm-detail-meta" id="pmDetailMeta"></div>
+          <div class="settings-form pm-record-form">
+            <label>
+              Tanggal service
+              <input type="date" id="pmRecordDate" />
+            </label>
+            <label>
+              Teknisi
+              <select id="pmRecordTech">
+                <option value="">— Opsional —</option>
+              </select>
+            </label>
+            <label class="settings-span-2">
+              Catatan service
+              <textarea id="pmRecordNotes" class="meta-text" rows="2" maxlength="2000" placeholder="Hasil pemeriksaan, sparepart diganti, dll."></textarea>
+            </label>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn-primary" id="btnSavePmRecord">Catat Service</button>
+            <span class="meta-save-msg" id="pmRecordMsg" aria-live="polite"></span>
+          </div>
+          <div class="report-table-wrap assets-table-wrap pm-records-wrap">
+            <table class="report-table" id="pmRecordsTable">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Teknisi</th>
+                  <th>Catatan</th>
+                  <th>Jadwal berikutnya</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="pmRecordsBody">
+                <tr><td colspan="5" class="muted">Belum ada service record.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <section class="report-view" id="viewTeam" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div>
+              <h3 class="assets-title">Daftar Teknisi</h3>
+              <p class="settings-hint">Data kontak dan keahlian teknisi sesuai kategori aset.</p>
+            </div>
+            <div class="assets-toolbar-actions">
+              <button type="button" class="btn-primary" id="btnNewTech">+ Tambah Baru</button>
+            </div>
+          </div>
+          <div class="report-summary" id="techSummary">0 teknisi</div>
+          <div class="report-table-wrap assets-table-wrap">
+            <table class="report-table" id="techTable">
+              <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>No. HP</th>
+                  <th>Email</th>
+                  <th>ID Telegram</th>
+                  <th>Keahlian</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="techBody">
+                <tr><td colspan="6" class="muted">Memuat teknisi…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal" id="techModal" hidden>
+        <div class="modal-backdrop" data-tech-close></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="techFormTitle">
+          <div class="modal-head">
+            <div>
+              <h3 id="techFormTitle">Tambah Teknisi</h3>
+              <p class="settings-hint">Isi data teknisi dan pilih keahlian.</p>
+            </div>
+            <button type="button" class="modal-close" data-tech-close aria-label="Tutup">×</button>
+          </div>
+          <input type="hidden" id="techEditId" value="" />
+          <div class="settings-form">
+            <label>
+              Nama teknisi
+              <input type="text" id="techName" maxlength="120" placeholder="Budi Santoso" />
+            </label>
+            <label>
+              Nomor HP
+              <input type="text" id="techPhone" maxlength="40" placeholder="0812xxxxxxxx" />
+            </label>
+            <label>
+              Email
+              <input type="email" id="techEmail" maxlength="120" placeholder="teknisi@perusahaan.com" />
+            </label>
+            <label>
+              ID Telegram
+              <input type="text" id="techTelegram" maxlength="80" placeholder="@username atau chat id" />
+            </label>
+            <div class="settings-span-2 skill-box">
+              <span class="skill-label">Keahlian</span>
+              <div class="skill-options" id="techSkillOptions">
+                <label class="skill-chip"><input type="checkbox" value="Network" /> Network</label>
+                <label class="skill-chip"><input type="checkbox" value="CCTV" /> CCTV</label>
+                <label class="skill-chip"><input type="checkbox" value="Access" /> Access</label>
+                <label class="skill-chip"><input type="checkbox" value="Alarm" /> Alarm</label>
+              </div>
+            </div>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn-primary" id="btnSaveTech">Simpan Teknisi</button>
+            <button type="button" class="btn-secondary" data-tech-close>Batal</button>
+            <span class="meta-save-msg" id="techSaveMsg" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+
+      <section class="report-view" id="viewUsers" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div>
+              <h3 class="assets-title">User Management</h3>
+              <p class="settings-hint">Kelola akun login CMMS. Administrator akses semua menu; Operator sesuai hak akses yang dipilih.</p>
+            </div>
+            <div class="assets-toolbar-actions">
+              <button type="button" class="btn-primary" id="btnNewUser">+ Tambah User</button>
+            </div>
+          </div>
+          <div class="report-summary" id="userSummary">0 user</div>
+          <div class="report-table-wrap assets-table-wrap">
+            <table class="report-table" id="userTable">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Nama</th>
+                  <th>Level</th>
+                  <th>Hak Akses Menu</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="userBody">
+                <tr><td colspan="6" class="muted">Memuat user…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal" id="userModal" hidden>
+        <div class="modal-backdrop" data-user-close></div>
+        <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="userFormTitle">
+          <div class="modal-head">
+            <div>
+              <h3 id="userFormTitle">Tambah User</h3>
+              <p class="settings-hint">Isi akun dan tentukan level akses.</p>
+            </div>
+            <button type="button" class="modal-close" data-user-close aria-label="Tutup">×</button>
+          </div>
+          <input type="hidden" id="userEditId" value="" />
+          <div class="settings-form">
+            <label>
+              Username
+              <input type="text" id="userUsername" maxlength="80" autocomplete="off" placeholder="operator1" />
+            </label>
+            <label>
+              Nama lengkap
+              <input type="text" id="userFullName" maxlength="120" placeholder="Nama tampilan" />
+            </label>
+            <label>
+              Password
+              <input type="password" id="userPassword" maxlength="120" autocomplete="new-password" placeholder="Minimal 6 karakter" />
+            </label>
+            <label>
+              Level
+              <select id="userRole">
+                <option value="operator">Operator</option>
+                <option value="administrator">Administrator</option>
+              </select>
+            </label>
+            <div class="settings-span-2 skill-box" id="userMenuBox">
+              <span class="skill-label">Hak akses menu (Operator)</span>
+              <div class="skill-options" id="userMenuOptions"></div>
+            </div>
+            <label class="settings-span-2 switch">
+              <input type="checkbox" id="userActive" checked />
+              <span>Aktif</span>
+            </label>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn-primary" id="btnSaveUser">Simpan User</button>
+            <button type="button" class="btn-secondary" data-user-close>Batal</button>
+            <span class="meta-save-msg" id="userSaveMsg" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+
+      <section class="report-view" id="viewStatistik" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div class="report-filters">
+              <label>
+                Dari
+                <input type="date" id="statFrom" />
+              </label>
+              <label>
+                Sampai
+                <input type="date" id="statTo" />
+              </label>
+              <label>
+                Perangkat
+                <select id="statDevice">
+                  <option value="all">Semua perangkat</option>
+                </select>
+              </label>
+              <button type="button" class="chip active" id="btnStatApply">Terapkan</button>
+            </div>
+          </div>
+
+          <div class="stats-kpi" id="statKpi">
+            <article class="stat card-green">
+              <div class="stat-label">Persentase Sehat</div>
+              <div class="stat-value"><span id="kpiHealthyPct">—</span><small>%</small></div>
+              <div class="stat-sub" id="kpiHealthySub">dalam rentang waktu</div>
+            </article>
+            <article class="stat card-blue">
+              <div class="stat-label">Uptime</div>
+              <div class="stat-value"><span id="kpiUptimePct">—</span><small>%</small></div>
+              <div class="stat-sub">Sehat + Perhatian</div>
+            </article>
+            <article class="stat card-red">
+              <div class="stat-label">Downtime</div>
+              <div class="stat-value"><span id="kpiDowntimePct">—</span><small>%</small></div>
+              <div class="stat-sub" id="kpiDowntimeSub">Gangguan</div>
+            </article>
+            <article class="stat card-orange">
+              <div class="stat-label">Perangkat</div>
+              <div class="stat-value" id="kpiDeviceCount">0</div>
+              <div class="stat-sub" id="kpiRangeLabel">—</div>
+            </article>
+          </div>
+
+          <div class="stats-chart-block">
+            <div class="stats-chart-head">
+              <h3>Timeline Uptime / Downtime</h3>
+              <div class="stats-legend">
+                <span class="leg leg-healthy">Sehat</span>
+                <span class="leg leg-attention">Perhatian</span>
+                <span class="leg leg-issue">Gangguan</span>
+              </div>
+            </div>
+            <div class="timeline-ribbon" id="statTimelineRibbon" aria-label="Timeline status"></div>
+            <div class="timeline-axis" id="statTimelineAxis"></div>
+            <div class="daily-chart-wrap">
+              <canvas id="statDailyChart" width="900" height="220" aria-label="Grafik harian uptime"></canvas>
+            </div>
+            <p class="report-summary" id="statSummary">Pilih filter lalu terapkan.</p>
+          </div>
+
+          <div class="report-table-wrap stats-device-table">
+            <table class="report-table" id="statDeviceTable">
+              <thead>
+                <tr>
+                  <th>Perangkat</th>
+                  <th>Sehat</th>
+                  <th>Uptime</th>
+                  <th>Downtime</th>
+                  <th>Distribusi</th>
+                </tr>
+              </thead>
+              <tbody id="statDeviceBody">
+                <tr><td colspan="5" class="muted">Memuat statistik…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="report-view" id="viewReport" hidden>
+        <div class="report-panel">
+          <div class="report-toolbar">
+            <div class="report-filters">
+              <label>
+                Dari
+                <input type="date" id="reportFrom" />
+              </label>
+              <label>
+                Sampai
+                <input type="date" id="reportTo" />
+              </label>
+              <label>
+                Device
+                <select id="reportDevice">
+                  <option value="all">Semua device</option>
+                </select>
+              </label>
+              <button type="button" class="chip active" id="btnReportApply">Terapkan</button>
+            </div>
+            <button type="button" class="btn-export" id="btnExportPdf">Export PDF</button>
+          </div>
+
+          <div class="report-summary" id="reportSummary">0 entri</div>
+
+          <div class="report-table-wrap">
+            <table class="report-table" id="reportTable">
+              <thead>
+                <tr>
+                  <th>Waktu</th>
+                  <th>Jenis</th>
+                  <th>Device</th>
+                  <th>Lokasi</th>
+                  <th>Status</th>
+                  <th>Keterangan</th>
+                </tr>
+              </thead>
+              <tbody id="reportBody">
+                <tr><td colspan="6" class="muted">Memuat histori…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="report-view" id="viewNotify" hidden>
+        <div class="settings-grid">
+          <div class="report-panel settings-card">
+            <div class="settings-card-head">
+              <div>
+                <h3>Email Sender (Gmail)</h3>
+                <p class="settings-hint">Gunakan SMTP Gmail dengan App Password (bukan password akun biasa).</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="emailEnabled" />
+                <span>Aktifkan</span>
+              </label>
+            </div>
+            <div class="settings-form">
+              <label>
+                SMTP Host
+                <input type="text" id="emailSmtpHost" value="smtp.gmail.com" autocomplete="off" />
+              </label>
+              <label>
+                SMTP Port
+                <input type="number" id="emailSmtpPort" value="587" min="1" max="65535" />
+              </label>
+              <label>
+                Email pengirim (SMTP user)
+                <input type="email" id="emailSmtpUser" placeholder="akun@gmail.com" autocomplete="off" />
+              </label>
+              <label>
+                App Password
+                <input type="password" id="emailSmtpPassword" placeholder="xxxx xxxx xxxx xxxx" autocomplete="new-password" />
+              </label>
+              <label>
+                Nama pengirim
+                <input type="text" id="emailFromName" placeholder="Simplo Monitor" />
+              </label>
+              <label>
+                From email
+                <input type="email" id="emailFromEmail" placeholder="akun@gmail.com" />
+              </label>
+              <label class="settings-span-2">
+                Penerima (pisahkan koma)
+                <input type="text" id="emailTo" placeholder="teknisi@perusahaan.com, admin@perusahaan.com" />
+              </label>
+            </div>
+            <div class="settings-actions">
+              <button type="button" class="btn-primary" id="btnSaveEmail">Simpan Email</button>
+              <button type="button" class="btn-secondary" id="btnTestEmail">Kirim Tes Email</button>
+              <span class="meta-save-msg" id="emailSaveMsg" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="report-panel settings-card">
+            <div class="settings-card-head">
+              <div>
+                <h3>Bot Telegram</h3>
+                <p class="settings-hint">Isi token dari @BotFather dan Chat ID tujuan (bisa lebih dari satu).</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="tgEnabled" />
+                <span>Aktifkan</span>
+              </label>
+            </div>
+            <div class="settings-form settings-form-tg">
+              <label class="settings-span-2">
+                Bot Token
+                <input type="password" id="tgBotToken" placeholder="123456:ABC-DEF..." autocomplete="new-password" />
+              </label>
+              <label class="settings-span-2">
+                Chat ID (pisahkan koma)
+                <input type="text" id="tgChatIds" placeholder="123456789, -1001234567890" autocomplete="off" />
+              </label>
+            </div>
+            <div class="settings-actions">
+              <button type="button" class="btn-primary" id="btnSaveTelegram">Simpan Telegram</button>
+              <button type="button" class="btn-secondary" id="btnTestTelegram">Kirim Tes Telegram</button>
+              <span class="meta-save-msg" id="tgSaveMsg" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+[Unit]
+Description=Simplo Monitor CMMS web dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=admincmms
+Group=admincmms
+WorkingDirectory=/home/admincmms/simplo-monitor
+ExecStart=/usr/bin/python3 /home/admincmms/simplo-monitor/app.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
